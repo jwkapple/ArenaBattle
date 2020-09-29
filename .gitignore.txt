@@ -1,9 +1,0 @@
-/Saved
-/Intermediate
-/.vs
-/Build
-/Plugins
-*.sln
-*_BuiltData.uasset
-Binaries/Win64/ArenaBattle.exe
-Binaries/Win64/ArenaBattle.pdb
