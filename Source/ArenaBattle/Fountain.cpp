@@ -14,6 +14,7 @@ AFountain::AFountain()
 
 	RootComponent = Body;
 	Water->SetupAttachment(Body);
+	
 }
 
 // Called when the game starts or when spawned
