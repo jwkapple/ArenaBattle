@@ -7,7 +7,5 @@
 *_BuiltData.uasset
 Binaries/Win64/ArenaBattle.exe
 Binaries/Win64/ArenaBattle.pdb
-Binaries/Win64/UE4Editor-ArenaBattle-0001.pdb
-Binaries/Win64/UE4Editor-ArenaBattle-0004.pdb
-Binaries/Win64/UE4Editor-ArenaBattle-0005.pdb
-Binaries/Win64/UE4Editor-ArenaBattle-2373.pdb
+Binaries/Win64/*.pdb
+Binaries/Win64/*.dll

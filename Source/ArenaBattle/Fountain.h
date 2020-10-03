@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EngineMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Fountain.generated.h"
 
@@ -28,4 +28,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Water;
+
+	UPROPERTY(VisibleAnywhere)
+	UPointLightComponent* Light;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent* Splash;
+
+	UPROPERTY(EditAnywhere, Category = ID)
+	uint32 ID;
 };
