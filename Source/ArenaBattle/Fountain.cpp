@@ -13,6 +13,7 @@ AFountain::AFountain()
 	Water = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Water"));
 	Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
 	Splash = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Splash"));
+	movement = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("MOVEMENT"));
 
 	RootComponent = Body;
 	Water->SetupAttachment(Body);
@@ -40,6 +41,10 @@ AFountain::AFountain()
 	{
 		Splash->SetTemplate(PS_SPLASH.Object);
 	}
+
+	//*------- Private Member Initialize -------*//
+	RotateSpeed = 30.0f;
+	movement->RotationRate = FRotator(0.0f, RotateSpeed, 0.0f);
 }
 
 // Called when the game starts or when spawned
@@ -52,10 +57,25 @@ void AFountain::BeginPlay()
 	ABLOG(Warning, TEXT("Actor Name : %s, ID : %d, Location X : %.3f"), *GetName(), ID, GetActorLocation().X);
 }
 
+void AFountain::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	ABLOG_S(Warning);
+}
+
+void AFountain::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	ABLOG_S(Warning);
+}
+
 // Called every frame
 void AFountain::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
 }
 
