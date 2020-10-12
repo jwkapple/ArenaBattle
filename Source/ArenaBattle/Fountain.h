@@ -41,7 +41,7 @@ public:
 	uint32 ID;
 
 	UPROPERTY(VisibleAnywhere)
-	URotatingMovementComponent* movement;
+	URotatingMovementComponent* Movement;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))

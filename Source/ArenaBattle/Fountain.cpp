@@ -7,13 +7,13 @@
 AFountain::AFountain()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	Water = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Water"));
 	Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
 	Splash = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Splash"));
-	movement = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("MOVEMENT"));
+	Movement = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("MOVEMENT"));
 
 	RootComponent = Body;
 	Water->SetupAttachment(Body);
@@ -44,7 +44,7 @@ AFountain::AFountain()
 
 	//*------- Private Member Initialize -------*//
 	RotateSpeed = 30.0f;
-	movement->RotationRate = FRotator(0.0f, RotateSpeed, 0.0f);
+	Movement->RotationRate = FRotator(RotateSpeed, 0.0f, 0.0f);
 }
 
 // Called when the game starts or when spawned
@@ -75,7 +75,5 @@ void AFountain::PostInitializeComponents()
 void AFountain::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	
 }
 
