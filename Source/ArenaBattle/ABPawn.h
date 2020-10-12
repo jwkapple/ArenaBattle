@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "ArenaBattle.h"
 #include "GameFramework/Pawn.h"
 #include "ABPawn.generated.h"
 
