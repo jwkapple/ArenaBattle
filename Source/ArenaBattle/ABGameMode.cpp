@@ -12,7 +12,7 @@ AABGameMode::AABGameMode()
 	static ConstructorHelpers::FClassFinder<APawn> BP_PAWN_C(TEXT("/Game/ThirdPersonCPP/Blueprints/ThirdPersonCharacter.ThirdPersonCharacter_C"));
 	if (BP_PAWN_C.Succeeded())
 	{
-		DefaultPawnClass = BP_PAWN_C.Class;
+	
 		ABLOG(Warning, TEXT("Pawn BP load succeeded"));
 	}
 }
