@@ -18,4 +18,5 @@ public:
 
 	AABPlayerController();
 	virtual void PostInitializeComponents() override;
+	virtual void OnPossess(APawn* aPawn) override;
 };

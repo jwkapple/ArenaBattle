@@ -44,7 +44,7 @@ AFountain::AFountain()
 
 	//*------- Private Member Initialize -------*//
 	RotateSpeed = 30.0f;
-	Movement->RotationRate = FRotator(RotateSpeed, 0.0f, 0.0f);
+	Movement->RotationRate = FRotator(0.0f, RotateSpeed, 0.0f);
 }
 
 // Called when the game starts or when spawned
