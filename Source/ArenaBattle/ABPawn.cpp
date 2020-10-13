@@ -2,22 +2,7 @@
 
 
 #include "ABPawn.h"
-/*
-	UPROPERTY(VisibleAnywhere, Category = Collision)
-	UCapsuleComponent* Capsule;
 
-	UPROPERTY(VisibleAnywhere, Category = Visible)
-	USkeletalMeshComponent* Mesh;
-
-	UPROPERTY(VisibleAnywhere, Category = Movement)
-	UFloatingPawnMovement* Movement;
-
-	UPROPERTY(VisibleAnywhere, Category = Camera)
-	USpringArmComponent* SpringArm;
-
-	UPROPERTY(VisibleAnywhere, Category = Camera)
-	UCameraComponent* Camera;
-*/
 // Sets default values
 AABPawn::AABPawn()
 {
@@ -33,7 +18,7 @@ AABPawn::AABPawn()
 	RootComponent = Capsule;
 	Mesh->SetupAttachment(Capsule);
 	SpringArm->SetupAttachment(Capsule);
-	Camera->SetupAttachment(Capsule);
+	Camera->SetupAttachment(SpringArm);
 
 	Capsule->SetCapsuleHalfHeight(88.0f);
 	Capsule->SetCapsuleRadius(34.0f);
@@ -41,10 +26,10 @@ AABPawn::AABPawn()
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM_CARDBOARD(TEXT("/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Standard.SK_CharM_Standard"));
-	if (SM_CARDBOARD.Succeeded())
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CARDBOARD(TEXT("/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Cardboard.SK_CharM_Cardboard"));
+	if (SK_CARDBOARD.Succeeded())
 	{
-		Mesh->SetSkeletalMesh(SM_CARDBOARD.Object);
+		Mesh->SetSkeletalMesh(SK_CARDBOARD.Object);
 		ABLOG(Warning, TEXT("Successfully loaded Cardboard model"));
 	}
 }
@@ -68,6 +53,18 @@ void AABPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis(TEXT("UpDown"), this, &AABPawn::UpDown);
+	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AABPawn::LeftRight);
+}
+
+void AABPawn::UpDown(float NewAxisValue)
+{
+	ABLOG(Warning, TEXT("%f"), NewAxisValue);
+}
+
+void AABPawn::LeftRight(float NewAxisValue)
+{
+	ABLOG(Warning, TEXT("%f"), NewAxisValue);
 }
 
 void AABPawn::PostInitializeComponents()
