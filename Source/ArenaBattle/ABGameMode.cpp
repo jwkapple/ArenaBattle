@@ -9,12 +9,6 @@ AABGameMode::AABGameMode()
 {
 	DefaultPawnClass = AABPawn::StaticClass();
 	PlayerControllerClass = AABPlayerController::StaticClass(); 
-	static ConstructorHelpers::FClassFinder<APawn> BP_PAWN_C(TEXT("/Game/ThirdPersonCPP/Blueprints/ThirdPersonCharacter.ThirdPersonCharacter_C"));
-	if (BP_PAWN_C.Succeeded())
-	{
-	
-		ABLOG(Warning, TEXT("Pawn BP load succeeded"));
-	}
 }
 
 void AABGameMode::PostLogin(APlayerController* NewPlayer)
