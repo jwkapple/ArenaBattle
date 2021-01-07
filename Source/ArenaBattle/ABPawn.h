@@ -43,7 +43,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	UCameraComponent* Camera;
-
 private:
 	void UpDown(float NewAxisValue);
 	void LeftRight(float NewAxisValue);

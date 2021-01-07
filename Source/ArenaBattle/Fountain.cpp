@@ -44,7 +44,7 @@ AFountain::AFountain()
 
 	//*------- Private Member Initialize -------*//
 	RotateSpeed = 30.0f;
-	Movement->RotationRate = FRotator(0.0f, RotateSpeed, 0.0f);
+	
 }
 
 // Called when the game starts or when spawned
@@ -75,5 +75,6 @@ void AFountain::PostInitializeComponents()
 void AFountain::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	Movement->RotationRate = FRotator(0.0f, RotateSpeed, 0.0f);
 }
 

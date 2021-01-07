@@ -7,5 +7,7 @@
 *_BuiltData.uasset
 Binaries/Win64/ArenaBattle.exe
 Binaries/Win64/ArenaBattle.pdb
+Binaries/Win64/ArenaBattle.lib
+Binaries/Win64/ArenaBattle.exp
 Binaries/Win64/*.pdb
 Binaries/Win64/*.dll

@@ -38,8 +38,14 @@ AABPawn::AABPawn()
 void AABPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Mesh->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+	UAnimationAsset* AnimRun = LoadObject<UAnimationAsset>(nullptr, TEXT("/Game/Animation/WarriorRun.WarriorRun"));
+	if(AnimRun != nullptr)
+	{
+		Mesh->PlayAnimation(AnimRun, false);
+	}
 }
+
 
 // Called every frame
 void AABPawn::Tick(float DeltaTime)
