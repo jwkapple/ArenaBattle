@@ -54,7 +54,7 @@ void AABCharacter::SetControlMode(uint32_t ControlMode)
 		SpringArm->SetRelativeRotation(FRotator::ZeroRotator);
 		SpringArm->bUsePawnControlRotation = true;
 		SpringArm->bInheritPitch = true;
-		SpringArm->bInheritRoll = false;
+		SpringArm->bInheritRoll = true;
 		SpringArm->bInheritYaw = true;
 		SpringArm->bDoCollisionTest = true;
 		bUseControllerRotationYaw = false;
@@ -77,11 +77,12 @@ void AABCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AABCharacter::LeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AABCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AABCharacter::Turn);
+
+	bUseControllerRotationYaw = false;
 }
 
 void AABCharacter::UpDown(float NewAxisValue)
 {
-
 	AddMovementInput(GetActorForwardVector(), NewAxisValue);
 }
 
