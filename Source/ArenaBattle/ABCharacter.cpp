@@ -30,11 +30,10 @@ AABCharacter::AABCharacter()
 		ABLOG(Warning, TEXT("Successfully loaded Cardboard model"));
 	}
 
-	
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	
 	static ConstructorHelpers::FClassFinder<UAnimInstance> WARRIOR_ANIM
-	(TEXT("/Game/Animation/WarriorAnimBlueprint.WarriorAnimBlueprint"));
+	(TEXT("/Game/Animation/WarriorAnimBlueprint.WarriorAnimBlueprint_C"));
 	if (WARRIOR_ANIM.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(WARRIOR_ANIM.Class);
