@@ -22,6 +22,8 @@ AABCharacter::AABCharacter()
 	SpringArm->SetRelativeLocation(FVector(-15.0f, 0.0f, 0.0f));
 	ArmLengthSpeed = 3.0f;
 	ArmRotationSpeed = 10.0f;
+
+	GetCharacterMovement()->JumpZVelocity = 800.0f;
 	
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CARDBOARD(TEXT("/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Cardboard.SK_CharM_Cardboard"));
 	if (SK_CARDBOARD.Succeeded())
@@ -110,6 +112,7 @@ void AABCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AABCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AABCharacter::Turn);
 	PlayerInputComponent->BindAction(TEXT("ViewChange"), EInputEvent::IE_Pressed, this, &AABCharacter::ViewChange);
+	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
 
 	bUseControllerRotationYaw = false;
 }
