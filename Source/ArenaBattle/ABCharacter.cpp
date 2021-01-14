@@ -2,6 +2,7 @@
 
 
 #include "ABCharacter.h"
+#include "ABAnimInstance.h"
 
 // Sets default values
 AABCharacter::AABCharacter()
@@ -42,6 +43,7 @@ AABCharacter::AABCharacter()
 	}
 
 	SetControlMode(EControlMode::DIABLO);
+
 }
 
 // Called when the game starts or when spawned
@@ -186,6 +188,8 @@ void AABCharacter::ViewChange()
 
 void AABCharacter::Attack()
 {
-	ABLOG_S(Warning);
+	auto AnimInstance = Cast<UABAnimInstance>(GetMesh()->GetAnimInstance());
+
+	AnimInstance->PlayAttackMontage();
 }
 
