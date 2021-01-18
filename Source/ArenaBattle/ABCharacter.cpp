@@ -44,6 +44,7 @@ AABCharacter::AABCharacter()
 
 	SetControlMode(EControlMode::DIABLO);
 
+	IsAttacking = false;
 }
 
 // Called when the game starts or when spawned
@@ -102,6 +103,15 @@ void AABCharacter::Tick(float DeltaTime)
 		AddMovementInput(DirectionToMove);
 		break;
 	}
+}
+
+void AABCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	auto AnimInstance = Cast<UAnimInstance>(GetMesh()->GetAnimInstance());
+
+	AnimInstance->OnMontageEnded.AddDynamic(this, &AABCharacter::OnAttackMontageEnded);
 }
 
 // Called to bind functionality to input
@@ -188,8 +198,16 @@ void AABCharacter::ViewChange()
 
 void AABCharacter::Attack()
 {
+	if (IsAttacking) return;
+	
 	auto AnimInstance = Cast<UABAnimInstance>(GetMesh()->GetAnimInstance());
 
 	AnimInstance->PlayAttackMontage();
+	IsAttacking = true;
+}
+
+inline void AABCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	IsAttacking = false;
 }
 
