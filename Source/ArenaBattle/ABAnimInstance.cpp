@@ -37,3 +37,25 @@ void UABAnimInstance::PlayAttackMontage()
 {
 	Montage_Play(AttackMontage, 1.0f);
 }
+
+void UABAnimInstance::JumpToAttackMontageSection(int32 NewSection)
+{
+	UE_LOG(ArenaBattle, Warning, TEXT("%d"), NewSection);
+	
+	Montage_JumpToSection(GetAttackMontageSectionName(NewSection), AttackMontage);
+}
+
+void UABAnimInstance::AnimNotify_AttackHitCheck()
+{
+	OnAttackHitCheck.Broadcast();
+}
+
+void UABAnimInstance::AnimNotify_NextAttackCheck()
+{
+	OnNextAttackCheck.Broadcast();
+}
+
+FName UABAnimInstance::GetAttackMontageSectionName(int32 Section)
+{
+	return FName(*FString::Printf(TEXT("Attack %d"), Section));
+}
