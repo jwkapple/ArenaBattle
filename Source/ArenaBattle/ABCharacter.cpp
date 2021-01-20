@@ -49,6 +49,8 @@ AABCharacter::AABCharacter()
 	// Combo Related
 	MaxCombo = 4;
 	AttackEndComboState();
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 }
 
 // Called when the game starts or when spawned
@@ -127,12 +129,14 @@ void AABCharacter::PostInitializeComponents()
 			ABAnim->JumpToAttackMontageSection(CurrentCombo);
 		}
 	});
+	ABAnim->OnAttackHitCheck.AddUObject(this, &AABCharacter::AttackCheck);
+
 }
 
 // Called to bind functionality to input
 void AABCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(PlayerInputComponent);  
 
 	PlayerInputComponent->BindAxis(TEXT("UpDown"), this, &AABCharacter::UpDown);
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AABCharacter::LeftRight);
@@ -245,5 +249,26 @@ void AABCharacter::AttackEndComboState()
 	IsComboInputOn = false;
 	CanNextCombo = false;
 	CurrentCombo = 0;
+}
+
+void AABCharacter::AttackCheck()
+{
+	FHitResult HitResult;
+	FCollisionQueryParams Params(NAME_None, false, this);
+	bool bResult = GetWorld()->SweepSingleByChannel(
+		HitResult,
+		GetActorLocation(), GetActorLocation() + GetActorForwardVector() * 200.0f,
+		FQuat::Identity,
+		ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeSphere(50.0f),
+		Params);
+
+		if(bResult)
+		{
+			if(HitResult.Actor.IsValid())
+			{
+				ABLOG(Warning, TEXT("Hit Actor Name: %s"), *HitResult.Actor->GetName());
+			}
+		}
 }
 

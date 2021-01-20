@@ -52,6 +52,7 @@ public:
 
 	void AttackStartComboState();
 	void AttackEndComboState();
+	void AttackCheck();
 private:
 	void UpDown(float NewAxisValue);
 	void LeftRight(float NewAxisValue);
