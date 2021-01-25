@@ -33,6 +33,20 @@ AABCharacter::AABCharacter()
 		ABLOG(Warning, TEXT("Successfully loaded Cardboard model"));
 	}
 
+	FName WeaponSocket(TEXT("hand_rSocket"));
+
+    if (GetMesh()->DoesSocketExist(WeaponSocket))
+    {
+		Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WEAPON"));
+		static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_WEAPON(TEXT("/Game/InfinityBladeWeapons/Weapons/Blade/Swords/Blade_BlackKnight/SK_Blade_BlackKnight.SK_Blade_BlackKnight"));
+    	if(SK_WEAPON.Succeeded())
+    	{
+			Weapon->SetSkeletalMesh(SK_WEAPON.Object);
+    	}
+
+		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
+    }
+    
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	
 	static ConstructorHelpers::FClassFinder<UAnimInstance> WARRIOR_ANIM
