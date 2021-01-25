@@ -3,6 +3,7 @@
 
 #include "ABCharacter.h"
 #include "ABAnimInstance.h"
+#include "ABWeapon.h"
 
 // Sets default values
 AABCharacter::AABCharacter()
@@ -32,20 +33,6 @@ AABCharacter::AABCharacter()
 		GetMesh()->SetSkeletalMesh(SK_CARDBOARD.Object);
 		ABLOG(Warning, TEXT("Successfully loaded Cardboard model"));
 	}
-
-	FName WeaponSocket(TEXT("hand_rSocket"));
-
-    if (GetMesh()->DoesSocketExist(WeaponSocket))
-    {
-		Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WEAPON"));
-		static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_WEAPON(TEXT("/Game/InfinityBladeWeapons/Weapons/Blade/Swords/Blade_BlackKnight/SK_Blade_BlackKnight.SK_Blade_BlackKnight"));
-    	if(SK_WEAPON.Succeeded())
-    	{
-			Weapon->SetSkeletalMesh(SK_WEAPON.Object);
-    	}
-
-		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
-    }
     
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	
@@ -71,6 +58,15 @@ AABCharacter::AABCharacter()
 void AABCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FName WeaponSocket(TEXT("hand_rSocket"));
+	auto CurWeapon = GetWorld()->SpawnActor<AABWeapon>(FVector::ZeroVector,
+		FRotator::ZeroRotator);
+
+	if(CurWeapon != nullptr)
+	{
+		CurWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
+	}
 }
 
 void AABCharacter::SetControlMode(EControlMode ControlMode)

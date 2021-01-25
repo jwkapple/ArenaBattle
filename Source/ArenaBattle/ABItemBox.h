@@ -1,20 +1,19 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+A// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
-#include "ArenaBattle.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ABWeapon.generated.h"
+#include "ABItemBox.generated.h"
 
 UCLASS()
-class ARENABATTLE_API AABWeapon : public AActor
+class ARENABATTLE_API AABItemBox : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AABWeapon();
+	AABItemBox();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,6 +23,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(Visibleanywhere, Category = Weapon)
-	USkeletalMeshComponent* Weapon;
 };
