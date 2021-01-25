@@ -13,6 +13,8 @@ UABAnimInstance::UABAnimInstance()
 	{
 		AttackMontage = ATTACK_MONTAGE.Object;
 	}
+
+	IsDead = false;
 }
 
 void UABAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -20,8 +22,9 @@ void UABAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	auto Pawn = TryGetPawnOwner();
+	if (!::IsValid(Pawn)) return;
 
-	if(::IsValid(Pawn))
+	if(!IsDead)
 	{
 		CurrentPawnSpeed = Pawn->GetVelocity().Size();
 
