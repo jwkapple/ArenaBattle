@@ -31,13 +31,19 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Box)
 	UStaticMeshComponent* Box;
 
-	UPROPERTY(VisibleAnywhere, Category = Box)
+	UPROPERTY(EditInstanceOnly, Category = Box)
 	TSubclassOf<class AABWeapon> WeaponItemClass;
+
+	UPROPERTY(VisibleAnywhere, Category = Effect)
+	UParticleSystemComponent* Effect;
 	
 private:
 	UFUNCTION()
-		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+	                        const FHitResult& SweepResult);
+	UFUNCTION()
+		void OnEffectFinished(class UParticleSystemComponent* PSystem);
 };
 
 

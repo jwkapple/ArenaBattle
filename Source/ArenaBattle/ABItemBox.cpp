@@ -12,10 +12,12 @@ AABItemBox::AABItemBox()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TRIGGER"));
-	Box = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BOX"));
+    Box = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BOX"));
+	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 
 	RootComponent = Trigger;
-	Box->SetupAttachment(RootComponent);
+    Box->SetupAttachment(RootComponent);
+	Effect->SetupAttachment(RootComponent);
 
 	Trigger->SetBoxExtent(FVector(40.0f, 42.0f, 30.0f));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_BOX(TEXT(
@@ -26,12 +28,17 @@ AABItemBox::AABItemBox()
 		Box->SetStaticMesh(SM_BOX.Object);
 	}
 
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> PS_EFFECT(TEXT("/Game/InfinityBladeGrassLands/Effects/FX_Treasure/Chest/P_TreasureChest_Open_Mesh.P_TreasureChest_Open_Mesh"));
+	if(PS_EFFECT.Succeeded())
+	{
+		Effect->SetTemplate(PS_EFFECT.Object);
+		Effect->bAutoActivate = false;
+	}
     Box->SetRelativeLocation(FVector(0.0f, -3.5f, -30.0f));
 
 	Trigger->SetCollisionProfileName(TEXT("ABItemBox"));
     Box->SetCollisionProfileName(TEXT("NoCollision"));
 
-	WeaponItemClass = AABWeapon::StaticClass();
 }
 
 // Called when the game starts or when spawned
@@ -45,13 +52,13 @@ void AABItemBox::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnCharacterOverlap);
+	
 }
 
 // Called every frame
 void AABItemBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AABItemBox::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -64,10 +71,14 @@ void AABItemBox::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 	{
 		if (ABCharacter->CanSetWeapon())
 		{
-			auto Weapon = GetWorld()->SpawnActor<AABWeapon>(FVector::ZeroVector, FRotator::ZeroRotator);
+			auto Weapon = GetWorld()->SpawnActor<AABWeapon>(WeaponItemClass, FVector::ZeroVector, FRotator::ZeroRotator);
 			if (Weapon != nullptr)
 			{
 				ABCharacter->SetWeapon(Weapon);
+				Effect->Activate(true);
+				Box->SetHiddenInGame(true, true);
+				SetActorEnableCollision(false);
+				Effect->OnSystemFinished.AddDynamic(this, &AABItemBox::OnEffectFinished);
 			}
 		}
 		else
@@ -76,4 +87,9 @@ void AABItemBox::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 		}
 	}
 	
+}
+
+void AABItemBox::OnEffectFinished(UParticleSystemComponent* PSystem)
+{
+	Destroy();
 }
