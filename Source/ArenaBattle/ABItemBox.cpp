@@ -39,6 +39,7 @@ AABItemBox::AABItemBox()
 	Trigger->SetCollisionProfileName(TEXT("ABItemBox"));
     Box->SetCollisionProfileName(TEXT("NoCollision"));
 
+	WeaponItemClass = AABWeapon::StaticClass();
 }
 
 // Called when the game starts or when spawned

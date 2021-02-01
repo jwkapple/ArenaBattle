@@ -58,8 +58,6 @@ AABCharacter::AABCharacter()
 void AABCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 }
 
 void AABCharacter::SetControlMode(EControlMode ControlMode)
@@ -133,7 +131,6 @@ void AABCharacter::PostInitializeComponents()
 		}
 	});
 	ABAnim->OnAttackHitCheck.AddUObject(this, &AABCharacter::AttackCheck);
-
 }
 
 float AABCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
