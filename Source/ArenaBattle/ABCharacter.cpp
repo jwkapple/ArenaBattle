@@ -59,14 +59,7 @@ void AABCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FName WeaponSocket(TEXT("hand_rSocket"));
-	auto CurWeapon = GetWorld()->SpawnActor<AABWeapon>(FVector::ZeroVector,
-		FRotator::ZeroRotator);
-
-	if(CurWeapon != nullptr)
-	{
-		CurWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
-	}
+	
 }
 
 void AABCharacter::SetControlMode(EControlMode ControlMode)
@@ -254,6 +247,23 @@ void AABCharacter::Attack()
 		ABAnim->PlayAttackMontage();
 		ABAnim->JumpToAttackMontageSection(CurrentCombo);
 		IsAttacking = true;
+	}
+}
+
+bool AABCharacter::CanSetWeapon()
+{
+	return CurrentWeapon == nullptr;
+}
+
+void AABCharacter::SetWeapon(AABWeapon* NewWeapon)
+{
+	FName WeaponSocket(TEXT("hand_rSocket"));
+
+	if(NewWeapon != nullptr)
+	{
+		NewWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
+		NewWeapon->SetOwner(this);
+		CurrentWeapon = NewWeapon;
 	}
 }
 

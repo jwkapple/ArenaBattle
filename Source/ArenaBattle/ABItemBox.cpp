@@ -2,6 +2,8 @@
 
 
 #include "ABItemBox.h"
+#include "ABWeapon.h"
+#include "ABCharacter.h"
 
 // Sets default values
 AABItemBox::AABItemBox()
@@ -27,14 +29,15 @@ AABItemBox::AABItemBox()
     Box->SetRelativeLocation(FVector(0.0f, -3.5f, -30.0f));
 
 	Trigger->SetCollisionProfileName(TEXT("ABItemBox"));
-	Box->SetCollisionProfileName(TEXT("NoCollision"));
+    Box->SetCollisionProfileName(TEXT("NoCollision"));
+
+	WeaponItemClass = AABWeapon::StaticClass();
 }
 
 // Called when the game starts or when spawned
 void AABItemBox::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AABItemBox::PostInitializeComponents()
@@ -55,4 +58,22 @@ void AABItemBox::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	ABLOG_S(Warning);
+
+	auto ABCharacter = Cast<AABCharacter>(OtherActor);
+	if(ABCharacter != nullptr && WeaponItemClass != nullptr)
+	{
+		if (ABCharacter->CanSetWeapon())
+		{
+			auto Weapon = GetWorld()->SpawnActor<AABWeapon>(FVector::ZeroVector, FRotator::ZeroRotator);
+			if (Weapon != nullptr)
+			{
+				ABCharacter->SetWeapon(Weapon);
+			}
+		}
+		else
+		{
+			ABLOG(Warning, TEXT("%s can't equip weapon currently"), *ABCharacter->GetName());
+		}
+	}
+	
 }

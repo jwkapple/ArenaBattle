@@ -44,7 +44,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(VisibleAnywhere, Category = Weapon)
-	USkeletalMeshComponent* Weapon;
+	class AABWeapon* CurrentWeapon;
 	
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	USpringArmComponent* SpringArm;
@@ -58,6 +58,9 @@ public:
 	void AttackStartComboState();
 	void AttackEndComboState();
 	void AttackCheck();
+	
+	bool CanSetWeapon();
+	void SetWeapon(class AABWeapon* NewWeapon);
 private:
 	void UpDown(float NewAxisValue);
 	void LeftRight(float NewAxisValue);
