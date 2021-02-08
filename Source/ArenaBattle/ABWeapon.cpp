@@ -32,6 +32,5 @@ void AABWeapon::BeginPlay()
 void AABWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

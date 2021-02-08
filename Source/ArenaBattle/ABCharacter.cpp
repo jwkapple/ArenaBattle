@@ -3,6 +3,7 @@
 
 #include "ABCharacter.h"
 #include "ABAnimInstance.h"
+#include "ABCharacterStatComponent.h"
 #include "ABWeapon.h"
 
 // Sets default values
@@ -25,6 +26,8 @@ AABCharacter::AABCharacter()
 	ArmLengthSpeed = 3.0f;
 	ArmRotationSpeed = 10.0f;
 
+	CharacterStat = CreateDefaultSubobject<UABCharacterStatComponent>(TEXT("TEXT"));
+	
 	GetCharacterMovement()->JumpZVelocity = 800.0f;
 	
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CARDBOARD(TEXT("/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Cardboard.SK_CharM_Cardboard"));

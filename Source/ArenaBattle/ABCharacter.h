@@ -87,7 +87,8 @@ private:
 	UPROPERTY()
 	class UABAnimInstance* ABAnim;
 
-	
+	UPROPERTY()
+	class UABCharacterStatComponent* CharacterStat;
 };
 
 

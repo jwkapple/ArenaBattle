@@ -38,6 +38,11 @@ class ARENABATTLE_API UABGameInstance : public UGameInstance
 
 public:
 	UABGameInstance();
-	
+
 	virtual void Init() override;
+	FABCharacterData* GetABCharacterData(int32 level);
+public:
+	
+	UPROPERTY()
+	class UDataTable* ABCharacterTable;
 };
