@@ -52,6 +52,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	UCameraComponent* Camera;
 
+	UPROPERTY(VisibleAnywhere, Category = Stat)
+	class UABCharacterStatComponent* CharacterStat;
+	
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
@@ -86,9 +89,6 @@ private:
 
 	UPROPERTY()
 	class UABAnimInstance* ABAnim;
-
-	UPROPERTY()
-	class UABCharacterStatComponent* CharacterStat;
 };
 
 
