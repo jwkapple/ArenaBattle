@@ -5,6 +5,7 @@
 #include "ABAnimInstance.h"
 #include "ABCharacterStatComponent.h"
 #include "ABWeapon.h"
+#include "ABCharacterWidget.h"
 #include "Components/WidgetComponent.h"
 
 // Sets default values
@@ -73,6 +74,13 @@ AABCharacter::AABCharacter()
 void AABCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	auto CharacterWidget = Cast<UABCharacterWidget>(HPBarWidget->GetUserWidgetObject());
+
+	if(CharacterWidget != nullptr)
+	{
+		CharacterWidget->BindCharacterStatComponent(CharacterStat);
+	}
 }
 
 void AABCharacter::SetControlMode(EControlMode ControlMode)
