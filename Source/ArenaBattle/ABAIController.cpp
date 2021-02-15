@@ -21,6 +21,7 @@ void AABAIController::OnPossess(APawn* InPawn)
 void AABAIController::OnUnPossess()
 {
 	Super::OnUnPossess();
+	
 	GetWorld()->GetTimerManager().ClearTimer(RepeatTimerHandle);
 }
 
