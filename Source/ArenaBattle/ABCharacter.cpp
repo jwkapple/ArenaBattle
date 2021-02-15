@@ -7,6 +7,7 @@
 #include "ABWeapon.h"
 #include "ABCharacterWidget.h"
 #include "Components/WidgetComponent.h"
+#include "ABAIController.h"
 
 // Sets default values
 AABCharacter::AABCharacter()
@@ -67,7 +68,10 @@ AABCharacter::AABCharacter()
 	MaxCombo = 4;
 	AttackEndComboState();
 
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
+    GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
+
+	AIControllerClass = AABAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 // Called when the game starts or when spawned

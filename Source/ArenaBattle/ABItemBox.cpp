@@ -53,7 +53,6 @@ void AABItemBox::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnCharacterOverlap);
-	
 }
 
 // Called every frame
