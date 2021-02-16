@@ -19,10 +19,14 @@ public:
 	AABAIController();
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
-	
+
+	static const FName HomePosKey;
+	static const FName PatrolPosKey;
 private:
-	void OnRepeatTimer();
 	
-	FTimerHandle RepeatTimerHandle;
-	float RepeatInterval;
+	UPROPERTY()
+	class UBehaviorTree* BTAsset;
+
+	UPROPERTY()
+	class UBlackboardData* BBAsset;
 };

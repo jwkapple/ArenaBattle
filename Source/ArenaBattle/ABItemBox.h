@@ -43,7 +43,7 @@ private:
 	                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 	                        const FHitResult& SweepResult);
 	UFUNCTION()
-		void OnEffectFinished(class UParticleSystemComponent* PSystem);
+	void OnEffectFinished(class UParticleSystemComponent* PSystem);
 };
 
 
