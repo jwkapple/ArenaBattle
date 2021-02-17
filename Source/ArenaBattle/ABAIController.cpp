@@ -3,7 +3,6 @@
 
 #include "ABAIController.h"
 #include "NavigationSystem.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -43,5 +42,4 @@ void AABAIController::OnPossess(APawn* InPawn)
 void AABAIController::OnUnPossess()
 {
 	Super::OnUnPossess();
-	
 }
