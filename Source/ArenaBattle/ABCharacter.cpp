@@ -163,6 +163,7 @@ void AABCharacter::PostInitializeComponents()
 	{
 		ABLOG(Warning, TEXT("OnHPIsZero"));
 		ABAnim->SetDeadAnim();
+		
 		SetActorEnableCollision(false);
 	});
 }

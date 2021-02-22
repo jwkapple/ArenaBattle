@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "ArenaBattle.h"
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTService.h"
 #include "BTService_Detect.generated.h"

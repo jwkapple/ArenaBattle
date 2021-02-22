@@ -29,7 +29,7 @@ void UABCharacterStatComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	SetNewLevel(15);
+	SetNewLevel(5);
 }
 
 
