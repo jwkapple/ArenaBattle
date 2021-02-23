@@ -267,7 +267,6 @@ void AABCharacter::Attack()
 	{
 		if (CanNextCombo) IsComboInputOn = true;
 	}
-
 	else
 	{
 		AttackStartComboState();
@@ -298,6 +297,7 @@ inline void AABCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInte
 {
 	IsAttacking = false;
 	AttackEndComboState();
+	OnAttackEnd.Broadcast();
 }
 
 void AABCharacter::AttackStartComboState()

@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "ABCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate)
+
 UCLASS()
 class ARENABATTLE_API AABCharacter : public ACharacter
 {
@@ -64,6 +66,9 @@ public:
 	void AttackStartComboState();
 	void AttackEndComboState();
 	void AttackCheck();
+
+	FOnAttackEndDelegate OnAttackEnd;
+	void Attack();
 	
 	bool CanSetWeapon();
 	void SetWeapon(class AABWeapon* NewWeapon);
@@ -73,7 +78,7 @@ private:
 	void LookUp(float NewAxisValue);
 	void Turn(float NewAxisValue);
 	void ViewChange();
-	void Attack();
+	
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true));
 	bool IsAttacking;
