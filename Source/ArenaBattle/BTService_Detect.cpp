@@ -9,7 +9,7 @@
 UBTService_Detect::UBTService_Detect()
 {
 	NodeName = TEXT("Detect");
-	Interval = 1.0f;
+	Interval = 3.0f;
 }
 
 void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
@@ -52,4 +52,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			DrawDebugLine(World, Center, ABCharacter->GetActorLocation(), FColor::Green, false, 0.5f);
 		}
 	}
+	else OwnerComp.GetBlackboardComponent()->SetValueAsObject(AABAIController::TargetKey, nullptr);
+
+	OwnerComp.GetBlackboardComponent()->SetValueAsVector(AABAIController::HomePosKey, ControllingPawn->GetActorLocation());
 }
