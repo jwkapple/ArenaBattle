@@ -9,6 +9,7 @@
 #include "Components/WidgetComponent.h"
 #include "ABAIController.h"
 #include "ABCharacterSetting.h"
+#include "ABGameInstance.h"
 
 // Sets default values
 AABCharacter::AABCharacter()
@@ -73,15 +74,6 @@ AABCharacter::AABCharacter()
 
 	AIControllerClass = AABAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-
-	auto DefaultSetting = GetDefault<UABCharacterSetting>();
-	if (DefaultSetting->CharacterAssets.Num() > 0)
-	{
-		for (auto CharacterAsset : DefaultSetting->CharacterAssets)
-		{
-			ABLOG(Warning, TEXT("Character Asset : %s"), *CharacterAsset.ToString());
-		}
-	}
 }
 
 // Called when the game starts or when spawned
@@ -94,6 +86,22 @@ void AABCharacter::BeginPlay()
 	if(CharacterWidget != nullptr)
 	{
 		CharacterWidget->BindCharacterStatComponent(CharacterStat);
+	}
+
+	if (!IsPlayerControlled())
+	{
+		auto DefaultSetting = GetDefault<UABCharacterSetting>();
+		int32 RandIdx = FMath::RandRange(0, DefaultSetting->CharacterAssets.Num() - 1);
+		CharacterAssetToLoad = DefaultSetting->CharacterAssets[RandIdx];
+
+		auto ABGameInstance = Cast<UABGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+		if (ABGameInstance != nullptr)
+		{
+			AssetStreamingHandle = ABGameInstance->StreamableManager.RequestAsyncLoad(CharacterAssetToLoad,
+				FStreamableDelegate::CreateUObject(this, &AABCharacter::OnAssetLoadCompleted));
+
+			ABLOG(Warning, TEXT("Succeeded Loading Character Asset!"));
+		}
 	}
 }
 
@@ -300,6 +308,16 @@ void AABCharacter::SetWeapon(AABWeapon* NewWeapon)
 		NewWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
 		NewWeapon->SetOwner(this);
 		CurrentWeapon = NewWeapon;
+	}
+}
+
+void AABCharacter::OnAssetLoadCompleted()
+{
+	USkeletalMesh* AssetLoaded = Cast<USkeletalMesh>(AssetStreamingHandle->GetLoadedAsset());
+	AssetStreamingHandle.Reset();
+	if (AssetLoaded != nullptr)
+	{
+		GetMesh()->SetSkeletalMesh(AssetLoaded);
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "Engine/DataTable.h"
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Engine/StreamableManager.h"
 #include "ABGameInstance.generated.h"
 
 USTRUCT(BlueprintType)
@@ -41,6 +42,8 @@ public:
 
 	virtual void Init() override;
 	FABCharacterData* GetABCharacterData(int32 level);
+
+	FStreamableManager StreamableManager;
 public:
 	
 	UPROPERTY()

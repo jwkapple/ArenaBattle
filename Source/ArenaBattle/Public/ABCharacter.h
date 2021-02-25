@@ -72,6 +72,8 @@ public:
 	
 	bool CanSetWeapon();
 	void SetWeapon(class AABWeapon* NewWeapon);
+
+	void OnAssetLoadCompleted();
 private:
 	void UpDown(float NewAxisValue);
 	void LeftRight(float NewAxisValue);
@@ -97,6 +99,9 @@ private:
 
 	UPROPERTY()
 	class UABAnimInstance* ABAnim;
+
+	FSoftObjectPath CharacterAssetToLoad;
+	TSharedPtr<struct FStreamableHandle> AssetStreamingHandle;
 };
 
 
