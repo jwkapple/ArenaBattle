@@ -4,6 +4,7 @@
 #include "BTTask_Attack.h"
 #include "ABCharacter.h"
 #include "ABAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_Attack::UBTTask_Attack()
 {
@@ -31,9 +32,5 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 void UBTTask_Attack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-
-	if(!IsAttacking)
-	{
-		(OwnerComp, EBTNodeResult::Succeeded);
-	}
+	if (!IsAttacking) FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 }
