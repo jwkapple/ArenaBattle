@@ -74,6 +74,9 @@ public:
 	void SetWeapon(class AABWeapon* NewWeapon);
 
 	void OnAssetLoadCompleted();
+
+	void SetCharacterState(ECharacterState NewState);
+	ECharacterState GetCharacterState() const;
 private:
 	void UpDown(float NewAxisValue);
 	void LeftRight(float NewAxisValue);
@@ -102,6 +105,20 @@ private:
 
 	FSoftObjectPath CharacterAssetToLoad;
 	TSharedPtr<struct FStreamableHandle> AssetStreamingHandle;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, BlueprintReadOnly, Category = State, Meta = (AllowPrivateAccess = true))
+	bool IsPlayer;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, BlueprintReadOnly, Category = State, Meta = (AllowPrivateAccess = true))
+	ECharacterState CurrentState;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = State, Meta = (AllowPrivateAccess = true))
+	float DeadTimer;
+
+	int32 AssetIdx;
+	class AABAIController* ABAIController;
+	class AABPlayerController* ABPlayerController;
+	FTimerHandle DeadTimerHandle = {};
 };
 
 

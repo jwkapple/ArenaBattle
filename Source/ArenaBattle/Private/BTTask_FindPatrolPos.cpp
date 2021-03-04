@@ -19,7 +19,11 @@ EBTNodeResult::Type UBTTask_FindPatrolPos::ExecuteTask(UBehaviorTreeComponent& O
 	if (ControllingPawn == nullptr) return EBTNodeResult::Failed;
 
 	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetNavigationSystem(ControllingPawn->GetWorld());
-	if (NavSystem == nullptr) return EBTNodeResult::Failed;
+	if (NavSystem == nullptr) 
+	{
+		ABLOG(Error, TEXT("Failed to get NavMeshVolume"));
+		return EBTNodeResult::Failed;
+	}
 
 	FVector Origin = OwnerComp.GetBlackboardComponent()->GetValueAsVector(AABAIController::HomePosKey);
 	FNavLocation NextPatrol;

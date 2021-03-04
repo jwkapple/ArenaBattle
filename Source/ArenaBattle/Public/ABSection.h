@@ -60,4 +60,15 @@ private:
 	void OnGateTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool
 		bFromSweep, const FHitResult &SweepResult);
+
+	void OnNPCSpawn();
+
+private:
+	UPROPERTY(EditAnywhere, Category = Spawn, Meta = (AllowPrivateAccess = true))
+	float EnemySpawnTime;
+	UPROPERTY(EditAnywhere, Category = Spawn, Meta = (AllowPrivateAccess = true))
+	float ItemSpawnTime;
+
+	FTimerHandle SpawnNPCTimerHandle = {};
+	FTimerHandle SpawnItemTimerHandle = {};
 };

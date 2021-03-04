@@ -2,6 +2,9 @@
 
 
 #include "ABSection.h"
+#include "ABCharacter.h"
+#include "ABItemBox.h"
+
 
 // Sets default values
 AABSection::AABSection()
@@ -53,6 +56,10 @@ AABSection::AABSection()
 		GateTrigger->OnComponentBeginOverlap.AddDynamic(this, &AABSection::OnGateTriggerBeginOverlap);
 		GateTrigger->ComponentTags.Add(GateSocket);
 	}
+
+
+	EnemySpawnTime = 2.0f;
+	ItemSpawnTime = 5.0f;
 }
 
 // Called when the game starts or when spawned
@@ -106,6 +113,12 @@ void AABSection::SetState(ESectionState NewState)
 		ABLOG(Warning, TEXT("Gate Trigger: %s"), *GateTriggers[0]->GetCollisionProfileName().ToString());
 		OperateGates(false);
 
+		GetWorld()->GetTimerManager().SetTimer(SpawnNPCTimerHandle, FTimerDelegate::CreateUObject(this, &AABSection::OnNPCSpawn), EnemySpawnTime, false);
+		GetWorld()->GetTimerManager().SetTimer(SpawnItemTimerHandle, FTimerDelegate::CreateLambda([this]()-> void {
+
+			FVector2D RandPos = FMath::RandPointInCircle(600.0f);
+			GetWorld()->SpawnActor<AABItemBox>(GetActorLocation() + FVector(RandPos, 30.0f), FRotator::ZeroRotator);
+		}), ItemSpawnTime, false);
 		break;
 	}
 	case AABSection::ESectionState::COMPLETE:
@@ -171,5 +184,11 @@ void AABSection::OnGateTriggerBeginOverlap(UPrimitiveComponent* OverlappedCompon
 	{
 		ABLOG(Warning, TEXT("Failed To Spawn New AABSection No: %s"), *SocketName.ToString());
 	}
+}
+
+void AABSection::OnNPCSpawn()
+{
+	FVector2D RandXY = FMath::RandPointInCircle(600.0f);
+	GetWorld()->SpawnActor<AABCharacter>(GetActorLocation() + FVector::UpVector * 88.0f, FRotator::ZeroRotator);
 }
 
