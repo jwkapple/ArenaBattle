@@ -11,6 +11,7 @@
 #include "ABAIController.h"
 #include "ABCharacterSetting.h"
 #include "ABGameInstance.h"
+#include "ABPlayerState.h"
 
 // Sets default values
 AABCharacter::AABCharacter()
@@ -330,7 +331,12 @@ void AABCharacter::SetCharacterState(ECharacterState NewState)
 		case ECharacterState::LOADING:
 		{
 			ABLOG(Warning, TEXT("Current State: LOADING"));
-			if(IsPlayer) DisableInput(ABPlayerController);
+			if(IsPlayer) 
+			{
+				DisableInput(ABPlayerController);
+				auto ABPlayerState = Cast<AABPlayerState>(GetController()->PlayerState);
+				CharacterStat->SetNewLevel(ABPlayerState->GetCharacterLevel());
+			}
 			SetActorHiddenInGame(true);
 			HPBarWidget->SetHiddenInGame(true);
 

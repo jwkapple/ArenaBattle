@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "ArenaBattle.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "ABPlayerState.generated.h"
@@ -14,4 +15,16 @@ class ARENABATTLE_API AABPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 	
+public:
+	AABPlayerState();
+
+	int32 GetGameScore() const;
+	int32 GetCharacterLevel() const;
+
+	void InitPlayerData();
+private:
+	UPROPERTY(Transient)
+	int32 GameScore;
+	UPRPERTY(Transient)
+	int32 CharacterLevel;
 };
