@@ -91,4 +91,9 @@ float UABCharacterStatComponent::GetHPRatio()
 	return (CurrentHP < KINDA_SMALL_NUMBER) ? 0.0f : (CurrentHP / CurrentStatData->MaxHP);
 }
 
+int32 UABCharacterStatComponent::GetLevel()
+{
+	return Level;
+}
+
 

@@ -33,11 +33,10 @@ public:
 	void SetHP(float NewHP);
 	float GetAttack();
 	float GetHPRatio();
-
+	int32 GetLevel();
 	FOnHPIsZeroDelegate OnHPIsZero;
 	FOnHPChangeDelegate OnHPChange;
 private:
-
 	struct FABCharacterData* CurrentStatData = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))

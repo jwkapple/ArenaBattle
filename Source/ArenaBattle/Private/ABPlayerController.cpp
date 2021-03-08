@@ -2,9 +2,17 @@
 
 
 #include "ABPlayerController.h"
+#include "ABPlayerState.h"
+#include "ABHUDWidget.h"
 
 AABPlayerController::AABPlayerController()
 {
+	static ConstructorHelpers::FClassFinder<UABHUDWidget> UI_HUD_C(
+		TEXT("/Game/UI/UI_HUD.UI_HUD_C"));
+	if (UI_HUD_C.Succeeded())
+	{
+		HUDWidgetClass = UI_HUD_C.Class;
+	}
 }
 
 void AABPlayerController::PostInitializeComponents()
@@ -25,4 +33,16 @@ void AABPlayerController::BeginPlay()
 
 	FInputModeGameOnly InputMode;
 	SetInputMode(InputMode);
+
+	HUDWidget = CreateWidget<UABHUDWidget>(this, HUDWidgetClass);
+	HUDWidget->AddToViewport();
+	
+	auto ABPlayerState = Cast<AABPlayerState>(PlayerState);
+	HUDWidget->BindPlayerState(ABPlayerState);
+	ABPlayerState->OnPlayerStateChanged.Broadcast();
+}
+
+UABHUDWidget* AABPlayerController::GetHUDWidget() const
+{
+	return HUDWidget;
 }

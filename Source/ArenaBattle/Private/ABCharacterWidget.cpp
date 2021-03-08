@@ -32,3 +32,4 @@ void UABCharacterWidget::UpdateHPWidget()
 		}
 	}
 }
+

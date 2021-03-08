@@ -6,7 +6,7 @@
 AABPlayerState::AABPlayerState()
 {
 	CharacterLevel = 1;
-	Gamescore = 0;
+	GameScore = 0;
 }
 
 int32 AABPlayerState::GetGameScore() const
