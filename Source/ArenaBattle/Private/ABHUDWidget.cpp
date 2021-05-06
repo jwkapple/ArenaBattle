@@ -36,7 +36,7 @@ void UABHUDWidget::BindPlayerState(AABPlayerState* NewState)
 
 void UABHUDWidget::UpdateCharacterStat()
 {
-	HPB['ar->SetPercent(CharacterStat->GetHPRatio());
+	HPBar->SetPercent(CharacterStat->GetHPRatio());
 }
 void UABHUDWidget::UpdatePlayerState()
 {
